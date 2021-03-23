@@ -5,7 +5,7 @@
 Program                    | Link
 -------------------------- | ---------------------------------
 *bcftools 1.11*            | (http://www.htslib.org/download/)
-*calculate_proportions.sh* | (https://github.com/Burbano-Lab/rice-blast-variant-calling/blob/main/scripts/calculate_proportions.sh)
+*calculate_proportions.sh* | (https://github.com/Burbano-Lab/rice-blast-variant-calling/tree/main/scripts/)
 
 
 After the classification of the isolates in different genetic groups, we divided the SNPs segregating in each genetic group.
