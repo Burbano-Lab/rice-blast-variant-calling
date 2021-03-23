@@ -9,9 +9,8 @@ Program                              | Location
 *bcftools v.1.11*                    | (http://www.htslib.org/download/)
 *GATK v.3.8*                         | (https://github.com/broadinstitute/gatk)
 *vcftools v.0.1.16*                  | (https://github.com/vcftools/vcftools)
-*get_genotypes_from_VCF.py*          | (./scripts/rice-blast-variant-calling/get_genotypes_from_VCF.py)
-*compare_short_vs_long_genotypes.py* | (./compare_short_vs_long_genotypes.py)
-
+*get_genotypes_from_VCF.py*          | (https://github.com/Burbano-Lab/rice-blast-variant-calling/blob/main/scripts/compare_short_vs_long_genotypes.py)
+*compare_short_vs_long_genotypes.py* | (https://github.com/Burbano-Lab/rice-blast-variant-calling/blob/main/scripts/compare_short_vs_long_genotypes.py)
 
 
 ## Alignment of short reads to reference genome
