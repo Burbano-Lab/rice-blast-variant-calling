@@ -5,9 +5,9 @@ Program                          | Link
 -------------------------------- | -----------------------------------------
 *bcftools* v.1.11                | (http://www.htslib.org/download/)
 *PLINK* v.1.9                    | (https://www.cog-genomics.org/plink/1.9/)
-*tped2nexus.py*                  | (./scripts/tped2nexus.py)
+*tped2nexus.py*                  | (https://github.com/Burbano-Lab/rice-blast-variant-calling/blob/main/scripts/tped2nexus.py)
 *BEAST* v.2.6.3                  | (https://github.com/CompEvol/beast2)
-*compute_all_invariant_sites.py* | (./scripts/compute_all_invariant_sites.py)
+*compute_all_invariant_sites.py* | (https://github.com/Burbano-Lab/rice-blast-variant-calling/blob/main/scripts/compute_all_invariant_sites.py)
 
 First, we filtered out all individuals belonging to the recombinant genetic group. The analyses were carried out with full information positions. 
 ```bash
