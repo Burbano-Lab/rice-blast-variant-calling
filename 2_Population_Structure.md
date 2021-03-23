@@ -65,7 +65,7 @@ We ran *qp3Pop*
 qp3Pop -p f3outgroup_$subset1 > f3outgroup_$subset1.out
 ```
 
-The output file contains the calculates f3 values as well as it associates Z-scores.
+The output file contains the calculates f3 values as well as its associated Z-scores.
 
 ## PCA-based method
 
@@ -92,7 +92,7 @@ for(number_of_clusters in 2:7){ # Iterates from the values 2 to 7
 	clstr <- pam(coords_PCA, number_of_clusters, metric = "euclidean")
 }
 ```
-Finally, in order to generate confidence intervals, we sampled with replacement and recalculated the Silhouette scores
+Finally, to generate confidence intervals, we sampled with replacement and recalculated the Silhouette scores
 ```R
 iterations <- 1000 # Number of iterations
 for(i in 1:iterations){

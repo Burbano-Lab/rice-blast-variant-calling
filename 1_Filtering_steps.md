@@ -1,5 +1,5 @@
 # Rice blast variant calling
-# 1. Generation of the the Gold standard variants dataset and set of filters
+# 1. Generation of the Gold standard variants dataset and set of filters
 
 Program                              | Location
 ------------------------------------ | --------------------------------------------------
@@ -21,7 +21,7 @@ Raw .fastq sequences were trimmed with *AdapterRemoval2*.
 AdapterRemoval --file1 $sample1.R1.fastq.gz --file2 $sample1.R2.fastq.gz --gzip --basename $sample.trimmed
 ```
 
-We used the Pac-bio assembly Guy11 (https://doi.org/10.1016/j.molp.2017.08.008) as reference genome and used *BWA* to create the index.
+We used the Pac-bio assembly Guy11 (https://doi.org/10.1016/j.molp.2017.08.008) as the reference genome and used *BWA* to create the index.
 ```bash
 bwa index guy11.fa
 ```
@@ -39,7 +39,7 @@ minimap2 -x asm5 -a guy11.fa $sample1.nanopore_assembly.fa | samtools sort - > $
 ```
 
 ## Calling genotypes in the Nanopore data
-As the assemblies are a consensus among sequences, we used a simple approach to identify the haplotypes along the guy11 coordinate system with *bcftools*. We used *bcftools mpileup* and piped the produced vcf file into a custom python script *get_genotypes_from_VCF.py* to get the genotypes along the genome.
+As the assemblies are a consensus among sequences, we used a simple approach to identify the haplotypes along the reference coordinate system with *bcftools*. We used *bcftools mpileup* and piped the produced vcf file into a custom python script *get_genotypes_from_VCF.py* to get the genotypes along the genome.
 
 ```bash
 bcftools mpileup -I -f guy11.fa $sample1.long_reads.bam | python3 get_genotypes_from_VCF.py --long /dev/stdin | gzip > $sample1.long_read_genotypes.gz
@@ -77,7 +77,7 @@ N:   | Illumina NA & Nanopore NA
 python3 compare_short_vs_long_genotypes.py $sample1.short_read_genotypes.gz $sample1.long_read_genotypes.gz 2> $sample1.summary.txt | gzip > $sample1.short_vs_long_compared.gz
 ```
 
-The generated information can be summarized by exatrcting the union of the matching and unmatching positions from all samples. This will constitute our gold standard variants dataset (GSVD) and the non-GSVD.
+The generated information can be summarized by exatracting the union of the matching and unmatching positions from all samples. This will constitute our gold standard variants dataset (GSVD) and the non-GSVD.
 
 ```bash
 # All matching positions
@@ -90,7 +90,7 @@ zcat $sample{1..9}.short_vs_long.compared.gz | awk '($3 == "C" || $3 == "D")' | 
 
 ## Jointly calling genotypes on the 9 samples
 
-In order to have information from every single base along the rerefence genome we use the flag *-allbases* in the *GATK* program *GenotypeGVCFs*.
+To have information from every single base along the reference genome we use the flag *-allbases* in the *GATK* program *GenotypeGVCFs*.
 
 ```bash
 gatk -T GenotypeGVCFs -R guy11.fa -V samples1-to-9.list -ploidy 1 -o joint.vcf.gz -allbases
@@ -108,7 +108,7 @@ bcftools view -R nonGSVD.gz joint.vcf.gz | bgzip > joint_nonGSVD.vcf.gz
 
 ## Extracting features
 
-To asceratin the features and the empirical distributions of the two datasets, different summary statistics from the filtered SNP datasets are extracted
+To ascertain the features and the empirical distributions of the two datasets, different summary statistics from the filtered SNP datasets are extracted
 
 ```bash
 # We capture all the features in the VCF
