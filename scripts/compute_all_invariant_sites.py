@@ -1,4 +1,6 @@
 # USGAGE: python3 compute_all_invariant_sites.py <files_with_positions.list> <file.vcf> <reference.fasta> <N_threads>
+# IMPORTANT! Make sure the vcf file contains both filtered and unfiltered SNPs
+
 
 import gzip
 import vcfpytools
@@ -50,13 +52,23 @@ common = out[0]
 for i in range(1,len(out)):
     common = common.intersection(out[i])
 
+print('Common', len(common))
 # Substracting SNPs
 snps = []
+snps_out = []
 for record in vcfpytools.get_body(vcf_file):
-    if record.rsplit()[6] == 'PASS': # Just filtered positions
+    if record.rsplit()[6] == 'PASS':
         snps.append('_'.join(record.rsplit()[0:2]))
+    else:
+        snps_out.append('_'.join(record.rsplit()[0:2]))
 
-common = common.difference(snps)
+ceiling = common.difference(snps_out)
+print('Ceiling (Common - Filtered_out_SNPs): ', len(ceiling))
+
+invar_sites = ceiling.difference(snps)
+
+print('Invar_Sites (Ceiling - SNPs): ', len(invar_sites))
+
 
 # Assessing nucleotides from final list
 reference = {}
@@ -64,11 +76,13 @@ for contig in SeqIO.parse(reference_file, 'fasta'):
     reference[contig.id] = contig.seq
 
 output = {'A':0, 'T':0, 'C':0, 'G':0, 'N':0}
-for record in common:
+for record in invar_sites:
     contig = record.split('_')[0]
     pos = int(record.split('_')[1]) - 1 # Convert to python-based 0 values
     output[reference[contig][pos]] += 1
 
 print('Base\tCount')
 for i in output:
-    print(i, output[i], sep = '\t')
+    print(i, output[i])
+
+print('Ordered tag: ', ' '.join([str(output[i]) for i in ('A', 'C', 'G', 'T')]))
