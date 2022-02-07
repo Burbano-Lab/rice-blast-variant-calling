@@ -30,8 +30,10 @@ From the generated best trees we then calculated root-to-tip distances
 ```bash
 python root_to_tip_distances.py clonal.snps.raxml.bestTree > clonal.snps.raxml.root-to-tip_distances.txt
 ```
-We then correlate the phylofgenetic distances with the collection dates
+We then correlate the phylogenetic distances with the collection dates
 ```r
+#R#
+
 dates <- read.table('clonal_collection_year.tsv', header = T)
 RtoT_distances <- read.table('clonal.snps.raxml.root-to-tip_distances.txt' header = T)
 dist_year <- merge(RtoT_distances, dates, by.x = 1, by.y = 1)
