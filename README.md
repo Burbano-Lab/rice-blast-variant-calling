@@ -2,11 +2,11 @@
 
 This is a compilation of the workflow and custom scripts used in the Manuscript:
 
-"The impact of variant calling on the population history of the rice blast fungus"
+"SNP calling parameters have minimal impact on population structure and divergence time estimates for the rice blast fungus"
 
-Sergio M. Latorre, Thorsten Langner, Angus Malmgrem, Joe Win, Sophien Kamoun, Hernán A. Burbano
+Sergio M. Latorre, Thorsten Langner, Angus Malmgren, Joe Win, Sophien Kamoun, Hernán A. Burbano
 
-doi: 
+bioRxiv doi: 10.1101/2022.03.06.482794
 
 ## Repository structure
 The description of the general workflow, command line and pipelines is separated into three major sections:
