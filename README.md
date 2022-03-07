@@ -6,7 +6,7 @@ This is a compilation of the workflow and custom scripts used in the Manuscript:
 
 Sergio M. Latorre, Thorsten Langner, Angus Malmgren, Joe Win, Sophien Kamoun, Hernán A. Burbano
 
-bioRxiv doi: 10.1101/2022.03.06.482794
+bioRxiv doi: [10.1101/2022.03.06.482794](https://www.biorxiv.org/content/10.1101/2022.03.06.482794v1)
 
 ## Repository structure
 The description of the general workflow, command line and pipelines is separated into three major sections:
