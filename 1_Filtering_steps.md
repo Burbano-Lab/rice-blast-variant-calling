@@ -118,3 +118,51 @@ vcftools --gzvcf joint.mismatch.vcf.gz $(cat info_features) --min-alleles 2 --ma
 ```
 
 The result files can be easily imported to produce figures, inspect their distributions and generate cutoffs to be used as hard filters.
+
+## SNP datasets with all rice-infecting isolates
+
+Once the different cutoffs per filtering scheme were established, we called de-novo SNPs on the joint set of samples between the 9 samples previously described and the 131 samples described in [Latorre *et al*, 2020](https://doi.org/10.1186/s12915-020-00818-z). We created individual genomic VCF files for each isolate as described before and created a joint SNP call
+
+```bash
+gatk -T GenotypeGVCFs -R guy11.fa -V allsamples.list -ploidy 1 -o all_samples_joint.vcf.gz
+```
+
+Finally, we used the different filtering criteria to create four different SNP sets
+
+```bash
+# Latorre et al, 2020 filter
+gatk -T VariantFiltration -R guy11.fa -V all_samples_joint.vcf.gz \
+--filterExpression "QD < 5.0" --filterName "QDFilter" \
+--filterExpression "QUAL < 5000.0" --filterName "QualFilter" \
+--filterExpression "ReadPosRankSum < -2.0" --filterName "ReadPosRankSum" \
+--filterExpression "ReadPosRankSum > 2.0" --filterName "ReadPosRankSum" \
+--filterExpression "MQRankSum < -2.0" --filterName "MQRankSum" \
+--filterExpression "MQRankSum > 2.0" --filterName "MQRankSum" \
+--filterExpression "BaseQRankSum < -2.0" --filterName "BaseQRankSum" \
+--filterExpression "BaseQRankSum > 2.0" --filterName "BaseQRankSum" \
+--filterExpression "MQ < 20.0" --filterName "MQ" \
+-o latorre_et_al_filtered.snps.vcf.gz
+
+# QD-based filter
+gatk -T VariantFiltration -R guy11.fa -V all_samples_joint.vcf.gz \
+--filterExpression "QD < 22.21431 || QD > 32.16569" --filterName "QD" \
+-o QD_filtered.snps.vcf.gz
+
+# Relaxed filter
+gatk -T VariantFiltration -R guy11.fa -V all_samples_joint.vcf.gz \
+--filterExpression "QD < 19.72884 || QD > 34.65116" --filterName "QD" \
+--filterExpression "ReadPosRankSum < -2.234249 || ReadPosRankSum > 2.234249" --filterName "ReadPosRankSum" \
+--filterExpression "FS > 2.6" --filterName "FS" \
+--filterExpression "MQRankSum < -0.5 || MQRankSum > 4.0" --filterName "MQRankSum" \
+-o relaxed_filtered.snps.vcf.gz
+
+# Stringent filter
+gatk -T VariantFiltration -R guy11.fa -V all_samples_joint.vcf.gz \
+--filterExpression "QD < 25.71431 || QD > 28.66569" --filterName "QD" \
+--filterExpression "ReadPosRankSum < -0.0971292 || ReadPosRankSum > 0.0971292" --filterName "ReadPosRankSum" \
+--filterExpression "FS > 0.1" --filterName "FS" \
+-o stringent_filtered.snps.vcf.gz
+
+```
+
+The VCF files can be downloaded at [/data/VCF_SNP_sets.tar.gz](/data/VCF_SNP_sets.tar.gz)
